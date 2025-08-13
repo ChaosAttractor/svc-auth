@@ -17,8 +17,9 @@ import { LoggerConfigInterface, LoggerData } from './interfaces';
 
 import { dataType } from './types';
 
-import isEmptyObject from './utils/isEmptyObject';
 import { LoggerMethods } from './enums';
+
+import isEmptyObject from './utils/isEmptyObject';
 
 @Injectable()
 export default class LoggerService extends ConsoleLogger {
