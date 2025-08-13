@@ -8,10 +8,15 @@ import LoggerService from './modules/logger/logger.service';
 
 import loggerConfig from './config/logger.config';
 
+import checkEnv from './utils/checkEnv';
+import envList from './config/env.list';
+
 const bootstrap = async (): Promise<void> => {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: new LoggerService(loggerConfig),
-  });
+  const logger = new LoggerService(loggerConfig);
+
+  checkEnv(envList, logger);
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: false }));
 
