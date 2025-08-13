@@ -3,5 +3,5 @@
 .DS_Store
 node_modules/
 .npmrc
-/dist/
+app/dist/
 package-lock.json
