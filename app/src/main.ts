@@ -7,9 +7,9 @@ import { AppModule } from './app.module';
 import LoggerService from './modules/logger/logger.service';
 
 import loggerConfig from './config/logger.config';
+import envList from './config/env.list';
 
 import checkEnv from './utils/checkEnv';
-import envList from './config/env.list';
 
 const bootstrap = async (): Promise<void> => {
   const logger = new LoggerService(loggerConfig);
