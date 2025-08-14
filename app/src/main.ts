@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 import { AppModule } from './app.module';
 
@@ -16,19 +16,17 @@ const bootstrap = async (): Promise<void> => {
 
   checkEnv(envList, logger);
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger });
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+    logger,
+    transport: Transport.TCP,
+    options: {
+      host: process.env.SVC_HOSTNAME || '0.0.0.0',
+      port: +process.env.SVC_PORT || 8080,
+    },
+  });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, forbidUnknownValues: false }));
 
-  app.enableCors({
-    credentials: true,
-    origin: true,
-  });
-
-  app.set('query parser', 'extended');
-
-  const port = +process.env.SVC_PORT || 8080;
-  const hostname = process.env.SVC_HOSTNAME || '0.0.0.0';
-  await app.listen(port, hostname);
+  await app.listen();
 };
 bootstrap();

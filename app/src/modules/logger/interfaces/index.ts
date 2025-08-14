@@ -1,15 +1,15 @@
 import { LoggerOptions } from 'winston';
 import * as Transport from 'winston-transport';
-import TransportStream from 'winston-transport';
 
 import { dataType } from '../types';
+
 import { LoggerMethods } from '../enums';
 
 export interface WinstonLoggerConfig extends LoggerOptions {
   transports: Transport[];
 }
 
-export interface LokiTransportConfig extends TransportStream.TransportStreamOptions {
+export interface LokiTransportConfig extends Transport.TransportStreamOptions {
   host: string;
   basicAuth?: string;
   headers?: object;
